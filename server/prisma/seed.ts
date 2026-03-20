@@ -23,7 +23,7 @@ async function main() {
       username: 'admin',
       passwordHash: adminPassword,
       role: Role.ADMIN,
-      name: 'Dr. John Admin',
+      name: 'Dr. Khushi',
     },
   });
 

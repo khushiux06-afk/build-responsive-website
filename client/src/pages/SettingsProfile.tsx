@@ -41,9 +41,9 @@ export const SettingsPage: React.FC = () => (
 export const ProfilePage: React.FC = () => (
   <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm max-w-2xl mx-auto text-center">
     <div className="h-24 w-24 rounded-full bg-blue-600 mx-auto flex items-center justify-center text-4xl text-white font-bold mb-4">
-      A
+      K
     </div>
-    <h1 className="text-2xl font-bold text-gray-900">Dr. John Admin</h1>
+    <h1 className="text-2xl font-bold text-gray-900">Dr. Khushi</h1>
     <p className="text-gray-500 mb-6">Administrator</p>
     
     <div className="text-left space-y-4 pt-6 border-t border-gray-50">

@@ -29,7 +29,7 @@ export const LoginPage: React.FC = () => {
             id: 'demo-id',
             username: 'admin',
             role: 'ADMIN',
-            name: 'Demo Admin (Local Mode)'
+            name: 'Dr. Khushi'
           });
           navigate('/dashboard');
           return;
