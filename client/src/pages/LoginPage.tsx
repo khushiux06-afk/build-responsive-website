@@ -21,6 +21,20 @@ export const LoginPage: React.FC = () => {
       login(response.data.access_token, response.data.user);
       navigate('/dashboard');
     } catch (err: any) {
+      // FAST FIX: Fallback to mock login for Vercel Demo if backend is not deployed
+      if (!err.response || err.response.status === 404 || err.code === 'ERR_NETWORK') {
+        console.warn('Backend not reachable, using demo mode');
+        if (username === 'admin' && password === 'admin123') {
+          login('mock-token', {
+            id: 'demo-id',
+            username: 'admin',
+            role: 'ADMIN',
+            name: 'Demo Admin (Local Mode)'
+          });
+          navigate('/dashboard');
+          return;
+        }
+      }
       setError(err.response?.data?.message || 'Failed to login');
     } finally {
       setLoading(false);
