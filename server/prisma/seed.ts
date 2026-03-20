@@ -47,7 +47,7 @@ async function main() {
       fullName: 'Dr. Rajiv Mehta',
       specialization: 'Pediatric Dentist',
       phone: '9876543203',
-      email: 'rajiv.mehta@dentalhub.in',
+      email: 'admin@dentaldashboard.com',
       experienceYears: 6,
     },
     {

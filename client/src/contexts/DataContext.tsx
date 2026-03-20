@@ -72,12 +72,12 @@ const SEED_PATIENTS: Patient[] = [
 ];
 
 const SEED_DOCTORS: Doctor[] = [
-  { id: 'D01', fullName: 'Dr. Ankit Sharma', specialization: 'Orthodontist', experienceYears: 12, phone: '+91 98765 43210', email: 'ankit.sharma@dentalhub.in', photoKey: 'male_1' },
-  { id: 'D02', fullName: 'Dr. Neha Kapoor', specialization: 'Endodontist', experienceYears: 8, phone: '+91 87654 32109', email: 'neha.kapoor@dentalhub.in', photoKey: 'female_1' },
-  { id: 'D03', fullName: 'Dr. Rajiv Mehta', specialization: 'Periodontist', experienceYears: 15, phone: '+91 76543 21098', email: 'rajiv.mehta@dentalhub.in', photoKey: 'male_2' },
-  { id: 'D04', fullName: 'Dr. Priya Das', specialization: 'Prosthodontist', experienceYears: 10, phone: '+91 65432 10987', email: 'priya.das@dentalhub.in', photoKey: 'female_2' },
-  { id: 'D05', fullName: 'Dr. Suresh Patel', specialization: 'Oral Surgeon', experienceYears: 18, phone: '+91 54321 09876', email: 'suresh.patel@dentalhub.in', photoKey: 'male_3' },
-  { id: 'D06', fullName: 'Dr. Kavita Joshi', specialization: 'Pediatric Dentist', experienceYears: 7, phone: '+91 43210 98765', email: 'kavita.joshi@dentalhub.in', photoKey: 'female_3' },
+  { id: 'D01', fullName: 'Dr. Ankit Sharma', specialization: 'Orthodontist', experienceYears: 12, phone: '+91 98765 43210', email: 'ankit.sharma@dentaldashboard.com', photoKey: 'male_1' },
+  { id: 'D02', fullName: 'Dr. Neha Kapoor', specialization: 'Endodontist', experienceYears: 8, phone: '+91 87654 32109', email: 'neha.kapoor@dentaldashboard.com', photoKey: 'female_1' },
+  { id: 'D03', fullName: 'Dr. Rajiv Mehta', specialization: 'Periodontist', experienceYears: 15, phone: '+91 76543 21098', email: 'rajiv.mehta@dentaldashboard.com', photoKey: 'male_2' },
+  { id: 'D04', fullName: 'Dr. Priya Das', specialization: 'Prosthodontist', experienceYears: 10, phone: '+91 65432 10987', email: 'priya.das@dentaldashboard.com', photoKey: 'female_2' },
+  { id: 'D05', fullName: 'Dr. Suresh Patel', specialization: 'Oral Surgeon', experienceYears: 18, phone: '+91 54321 09876', email: 'suresh.patel@dentaldashboard.com', photoKey: 'male_3' },
+  { id: 'D06', fullName: 'Dr. Kavita Joshi', specialization: 'Pediatric Dentist', experienceYears: 7, phone: '+91 43210 98765', email: 'kavita.joshi@dentaldashboard.com', photoKey: 'female_3' },
 ];
 
 // ─── Context ──────────────────────────────────────────────────────────────────

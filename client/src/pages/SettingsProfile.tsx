@@ -9,11 +9,11 @@ export const SettingsPage: React.FC = () => (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Clinic Name</label>
-            <input type="text" className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg" defaultValue="DentalHub Clinic" />
+            <input type="text" className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg" defaultValue="Dental Dashboard" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Contact Email</label>
-            <input type="email" className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg" defaultValue="contact@dentalhub.in" />
+            <input type="email" className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg" defaultValue="contact@dentaldashboard.com" />
           </div>
         </div>
       </section>

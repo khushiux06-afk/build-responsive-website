@@ -121,6 +121,10 @@ export const ReportsPage: React.FC = () => {
         ))}
       </div>
 
+      <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+        Dental Dashboard
+      </h2>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue Bar Chart */}
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">

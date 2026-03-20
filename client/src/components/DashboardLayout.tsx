@@ -55,7 +55,7 @@ export const DashboardLayout: React.FC = () => {
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col pt-8">
         <div className="px-6 mb-10">
           <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            DentalHub
+            Dental Dashboard
           </h2>
         </div>
 

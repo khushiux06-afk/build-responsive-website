@@ -1,5 +1,5 @@
 {
-  "name": "dental-clinic-system",
+  "name": "dental-management-dashboard",
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix client\" \"npm run start:dev --prefix server\"",

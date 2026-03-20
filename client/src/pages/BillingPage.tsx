@@ -50,7 +50,7 @@ td{padding:12px 14px;border-bottom:1px solid #f3f4f6;font-size:13px}
 @media print{.print-btn{display:none}}
 </style></head><body>
 <div class="header">
-  <div><div class="clinic">🦷 DentalHub Clinic</div><div class="sub">📍 123, MG Road, Bengaluru – 560001<br>📞 +91 80 1234 5678 &nbsp;|&nbsp; ✉ contact@dentalhub.in<br>GSTIN: 29ABCDE1234F1Z5</div></div>
+  <div><div class="clinic">🦷 Dental Dashboard</div><div class="sub">📍 123, MG Road, Bengaluru – 560001<br>📞 +91 80 1234 5678 &nbsp;|&nbsp; ✉ contact@dentaldashboard.com<br>GSTIN: 29ABCDE1234F1Z5</div></div>
   <div><div class="inv-label">INVOICE</div><div class="inv-id">${inv.id}</div></div>
 </div>
 <div class="grid-2">
@@ -69,7 +69,7 @@ td{padding:12px 14px;border-bottom:1px solid #f3f4f6;font-size:13px}
   <tr class="total"><td colspan="2" style="text-align:right">Total</td><td style="text-align:right" class="total-amount">₹${inv.amount.toLocaleString('en-IN')}.00</td></tr>
 </table>
 <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
-<div class="footer">Thank you for choosing DentalHub Clinic! &nbsp;·&nbsp; Computer-generated invoice &nbsp;·&nbsp; No signature required</div>
+<div class="footer">Thank you for choosing Dental Dashboard! &nbsp;·&nbsp; Computer-generated invoice &nbsp;·&nbsp; No signature required</div>
 </body></html>`;
   const w = window.open('', '_blank');
   if (w) { w.document.write(html); w.document.close(); }
