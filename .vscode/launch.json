@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Frontend (Chrome)",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/client",
+      "preLaunchTask": "Start Frontend"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Backend (NestJS)",
+      "cwd": "${workspaceFolder}/server",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:debug"],
+      "preLaunchTask": "Start Backend",
+      "console": "integratedTerminal",
+      "restart": true,
+      "sourceMaps": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug All",
+      "configurations": ["Debug Backend (NestJS)", "Debug Frontend (Chrome)"]
+    }
+  ]
+}

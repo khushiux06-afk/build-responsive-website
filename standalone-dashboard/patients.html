@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients - Dental Clinic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="flex h-screen bg-gray-50 overflow-hidden">
+    <!-- Sidebar (Same as dashboard) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col pt-8">
+        <div class="px-6 mb-10">
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DentalHub</h2>
+        </div>
+        <nav class="flex-1 px-4 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="layout-dashboard" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            <a href="patients.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="users" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Patients</span>
+            </a>
+            <a href="appointments.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="calendar" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Appointments</span>
+            </a>
+            <a href="doctors.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="stethoscope" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Doctors</span>
+            </a>
+            <a href="billing.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="receipt" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Billing</span>
+            </a>
+            <a href="reports.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="bar-chart-3" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Reports</span>
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-100">
+            <button id="logout-btn" class="flex items-center space-x-3 w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-all">
+                <i data-lucide="log-out" class="w-5 h-5"></i>
+                <span class="font-medium">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+            <h1 class="text-xl font-semibold text-gray-800">Patients Directory</h1>
+            <button class="btn-primary flex items-center shadow-md shadow-blue-100 hover:scale-[1.02] active:scale-[0.98] transition-all"><i data-lucide="plus" class="mr-2 w-5 h-5"></i> Add Patient</button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 space-y-6">
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card p-4 text-center">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Total Patients</p>
+                    <p class="text-2xl font-bold text-blue-600">1,280</p>
+                </div>
+                <div class="card p-4 text-center">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Male</p>
+                    <p class="text-2xl font-bold text-indigo-600">742</p>
+                </div>
+                <div class="card p-4 text-center">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Female</p>
+                    <p class="text-2xl font-bold text-pink-600">542</p>
+                </div>
+            </div>
+
+            <div class="card overflow-hidden">
+                <div class="p-6 border-b border-gray-50 flex items-center justify-between bg-white">
+                    <div class="relative w-72">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4"></i>
+                        <input type="text" placeholder="Search patients..." class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 text-gray-400 text-xs uppercase tracking-wider font-semibold">
+                        <tr>
+                            <th class="px-6 py-4">Full Name</th>
+                            <th class="px-6 py-4">Phone</th>
+                            <th class="px-6 py-4">Gender</th>
+                            <th class="px-6 py-4">Blood Group</th>
+                            <th class="px-6 py-4 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50 text-sm">
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4">
+                                <div class="font-semibold text-gray-800">Rahul Sharma</div>
+                                <div class="text-gray-400 text-xs text-[10px]">P001</div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-600">+91 98765 43210</td>
+                            <td class="px-6 py-4 text-gray-500 italic">Male</td>
+                            <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-50 text-red-600 rounded text-xs font-bold">B+</span></td>
+                            <td class="px-6 py-4 text-center text-gray-400">
+                                <button class="hover:text-blue-600 mx-1"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                                <button class="hover:text-red-600 mx-1"><i data-lucide="trash" class="w-4 h-4"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Priya Verma</td>
+                            <td class="px-6 py-4 text-gray-600">+91 87654 32109</td>
+                            <td class="px-6 py-4 text-gray-500 italic">Female</td>
+                            <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-50 text-red-600 rounded text-xs font-bold">A+</span></td>
+                            <td class="px-6 py-4 text-center text-gray-400">
+                                <button class="hover:text-blue-600 mx-1"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                                <button class="hover:text-red-600 mx-1"><i data-lucide="trash" class="w-4 h-4"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Amit Gupta</td>
+                            <td class="px-6 py-4 text-gray-600">+91 76543 21098</td>
+                            <td class="px-6 py-4 text-gray-500 italic">Male</td>
+                            <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-50 text-red-600 rounded text-xs font-bold">O+</span></td>
+                            <td class="px-6 py-4 text-center text-gray-400">
+                                <button class="hover:text-blue-600 mx-1"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                                <button class="hover:text-red-600 mx-1"><i data-lucide="trash" class="w-4 h-4"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Neha Singh</td>
+                            <td class="px-6 py-4 text-gray-600">+91 65432 10987</td>
+                            <td class="px-6 py-4 text-gray-500 italic">Female</td>
+                            <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-50 text-red-600 rounded text-xs font-bold">AB+</span></td>
+                            <td class="px-6 py-4 text-center text-gray-400">
+                                <button class="hover:text-blue-600 mx-1"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                                <button class="hover:text-red-600 mx-1"><i data-lucide="trash" class="w-4 h-4"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 font-semibold text-gray-800">Vikram Sinha</td>
+                            <td class="px-6 py-4 text-gray-600">+91 54321 09876</td>
+                            <td class="px-6 py-4 text-gray-500 italic">Male</td>
+                            <td class="px-6 py-4"><span class="px-2 py-0.5 bg-red-50 text-red-600 rounded text-xs font-bold">B-</span></td>
+                            <td class="px-6 py-4 text-center text-gray-400">
+                                <button class="hover:text-blue-600 mx-1"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                                <button class="hover:text-red-600 mx-1"><i data-lucide="trash" class="w-4 h-4"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/scripts.js"></script>
+</body>
+</html>

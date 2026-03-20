@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors - Dental Clinic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="flex h-screen bg-gray-50 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col pt-8">
+        <div class="px-6 mb-10">
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DentalHub</h2>
+        </div>
+        <nav class="flex-1 px-4 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="layout-dashboard" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            <a href="patients.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="users" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Patients</span>
+            </a>
+            <a href="appointments.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="calendar" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Appointments</span>
+            </a>
+            <a href="doctors.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="stethoscope" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Doctors</span>
+            </a>
+            <a href="billing.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="receipt" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Billing</span>
+            </a>
+            <a href="reports.html" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 hover:bg-gray-100">
+                <i data-lucide="bar-chart-3" class="lucide w-5 h-5 text-gray-400"></i>
+                <span class="font-medium">Reports</span>
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-100">
+            <button id="logout-btn" class="flex items-center space-x-3 w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-all">
+                <i data-lucide="log-out" class="w-5 h-5"></i>
+                <span class="font-medium">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+            <h1 class="text-xl font-semibold text-gray-800">Our Doctors</h1>
+            <button class="btn-primary flex items-center shadow-md shadow-blue-100 hover:scale-[1.02] active:scale-[0.98] transition-all"><i data-lucide="plus" class="mr-2 w-5 h-5"></i> Add Doctor</button>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Doctor Card 1 -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <img src="https://ui-avatars.com/api/?name=Ankit+Sharma&background=0D8ABC&color=fff&size=128" alt="Dr. Ankit" class="w-24 h-24 rounded-full object-cover mb-4 border-4 border-blue-50 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800">Dr. Ankit Sha</h3>
+                    <p class="text-blue-600 text-sm font-semibold mb-3">Orthodontist</p>
+                    <div class="flex items-center text-gray-500 text-xs mb-4">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> 12 Years Experience
+                    </div>
+                    <div class="w-full flex space-x-2 pt-4 border-t border-gray-50">
+                        <button class="flex-1 btn-secondary text-xs py-2">View Profile</button>
+                        <button class="flex-1 btn-primary text-xs py-2">Schedule</button>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 2 -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <img src="https://ui-avatars.com/api/?name=Neha+Kapoor&background=FF5733&color=fff&size=128" alt="Dr. Neha" class="w-24 h-24 rounded-full object-cover mb-4 border-4 border-orange-50 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800">Dr. Neha Kapoor</h3>
+                    <p class="text-blue-600 text-sm font-semibold mb-3">Endodontist</p>
+                    <div class="flex items-center text-gray-500 text-xs mb-4">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> 8 Years Experience
+                    </div>
+                    <div class="w-full flex space-x-2 pt-4 border-t border-gray-50">
+                        <button class="flex-1 btn-secondary text-xs py-2">View Profile</button>
+                        <button class="flex-1 btn-primary text-xs py-2">Schedule</button>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 3 -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <img src="https://ui-avatars.com/api/?name=Rajiv+Mehta&background=33FF57&color=fff&size=128" alt="Dr. Rajiv" class="w-24 h-24 rounded-full object-cover mb-4 border-4 border-green-50 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800">Dr. Rajiv Mehta</h3>
+                    <p class="text-blue-600 text-sm font-semibold mb-3">Periodontist</p>
+                    <div class="flex items-center text-gray-500 text-xs mb-4">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> 15 Years Experience
+                    </div>
+                    <div class="w-full flex space-x-2 pt-4 border-t border-gray-50">
+                        <button class="flex-1 btn-secondary text-xs py-2">View Profile</button>
+                        <button class="flex-1 btn-primary text-xs py-2">Schedule</button>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 4 -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <img src="https://ui-avatars.com/api/?name=Priya+Das&background=ec4899&color=fff&size=128" alt="Dr. Priya" class="w-24 h-24 rounded-full object-cover mb-4 border-4 border-pink-50 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800">Dr. Priya Das</h3>
+                    <p class="text-blue-600 text-sm font-semibold mb-3">Prosthodontist</p>
+                    <div class="flex items-center text-gray-500 text-xs mb-4">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> 10 Years Experience
+                    </div>
+                    <div class="w-full flex space-x-2 pt-4 border-t border-gray-50">
+                        <button class="flex-1 btn-secondary text-xs py-2">View Profile</button>
+                        <button class="flex-1 btn-primary text-xs py-2">Schedule</button>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 5 -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <img src="https://ui-avatars.com/api/?name=Suresh+Patel&background=8b5cf6&color=fff&size=128" alt="Dr. Suresh" class="w-24 h-24 rounded-full object-cover mb-4 border-4 border-purple-50 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800">Dr. Suresh Patel</h3>
+                    <p class="text-blue-600 text-sm font-semibold mb-3">Oral Surgeon</p>
+                    <div class="flex items-center text-gray-500 text-xs mb-4">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> 18 Years Experience
+                    </div>
+                    <div class="w-full flex space-x-2 pt-4 border-t border-gray-50">
+                        <button class="flex-1 btn-secondary text-xs py-2">View Profile</button>
+                        <button class="flex-1 btn-primary text-xs py-2">Schedule</button>
+                    </div>
+                </div>
+
+                <!-- Doctor Card 6 -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <img src="https://ui-avatars.com/api/?name=Kavita+Joshi&background=06b6d4&color=fff&size=128" alt="Dr. Kavita" class="w-24 h-24 rounded-full object-cover mb-4 border-4 border-cyan-50 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-800">Dr. Kavita Joshi</h3>
+                    <p class="text-blue-600 text-sm font-semibold mb-3">Pediatric Dentist</p>
+                    <div class="flex items-center text-gray-500 text-xs mb-4">
+                        <i data-lucide="award" class="w-4 h-4 mr-1"></i> 7 Years Experience
+                    </div>
+                    <div class="w-full flex space-x-2 pt-4 border-t border-gray-50">
+                        <button class="flex-1 btn-secondary text-xs py-2">View Profile</button>
+                        <button class="flex-1 btn-primary text-xs py-2">Schedule</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/scripts.js"></script>
+</body>
+</html>

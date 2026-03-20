@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dental Clinic - Start Page</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #f0f4f8; margin: 0; }
+        .card { background: white; padding: 2rem; border-radius: 1rem; shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; max-width: 500px; }
+        h1 { color: #2563eb; }
+        .btn { display: inline-block; padding: 1rem 2rem; background: #2563eb; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: bold; margin: 1rem 0; }
+        .btn-green { background: #10b981; }
+        .note { font-size: 0.9rem; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🦷 Dental Clinic System</h1>
+        <p>Choose how you want to run the project:</p>
+        
+        <div style="margin-top: 2rem;">
+            <h3>Option A: Simple Version (No Server)</h3>
+            <p class="note">Just double-click this and it works instantly!</p>
+            <a href="standalone-dashboard/index.html" class="btn btn-green">OPEN SIMPLE DASHBOARD</a>
+        </div>
+
+        <hr style="margin: 2rem 0; border: none; border-top: 1px solid #e2e8f0;">
+
+        <div>
+            <h3>Option B: Full System (React + Database)</h3>
+            <p class="note">Must be running in VS Code first!</p>
+            <a href="http://localhost:5173" class="btn">OPEN FULL PORTAL</a>
+        </div>
+    </div>
+</body>
+</html>
