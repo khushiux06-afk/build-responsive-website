@@ -87,6 +87,7 @@ interface DataCtx {
   addAppointment: (a: Appointment) => void;
   updateAppointment: (id: string, patch: Partial<Appointment>) => void;
   deleteAppointment: (id: string) => void;
+  isSlotBooked: (doctor: string, rawDate: string, time: string, excludeId?: string) => boolean;
 
   patients: Patient[];
   addPatient: (p: Patient) => void;
@@ -128,6 +129,17 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => { save('clinic_patients', patients); }, [patients]);
   useEffect(() => { save('clinic_doctors', doctors); }, [doctors]);
 
+  // Check if a slot is already booked for a specific doctor+date+time
+  const isSlotBooked = (doctor: string, rawDate: string, time: string, excludeId?: string): boolean => {
+    return appointments.some(a =>
+      a.doctor === doctor &&
+      a.rawDate === rawDate &&
+      a.time === time &&
+      a.status !== 'CANCELLED' &&
+      (excludeId ? a.id !== excludeId : true)
+    );
+  };
+
   const addAppointment = (a: Appointment) => setAppointments(prev => [a, ...prev]);
   const updateAppointment = (id: string, patch: Partial<Appointment>) =>
     setAppointments(prev => prev.map(a => a.id === id ? { ...a, ...patch } : a));
@@ -144,7 +156,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const deleteDoctor = (id: string) => setDoctors(prev => prev.filter(d => d.id !== id));
 
   return (
-    <DataContext.Provider value={{ appointments, addAppointment, updateAppointment, deleteAppointment, patients, addPatient, updatePatient, deletePatient, doctors, addDoctor, updateDoctor, deleteDoctor }}>
+    <DataContext.Provider value={{ appointments, addAppointment, updateAppointment, deleteAppointment, isSlotBooked, patients, addPatient, updatePatient, deletePatient, doctors, addDoctor, updateDoctor, deleteDoctor }}>
       {children}
     </DataContext.Provider>
   );

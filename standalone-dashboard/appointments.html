@@ -7,6 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        .slot-available { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; cursor: pointer; }
+        .slot-available:hover { background: #3b82f6; color: #fff; border-color: #3b82f6; transform: scale(1.05); }
+        .slot-booked { background: #fef2f2; color: #f87171; border: 1px solid #fecaca; cursor: not-allowed; text-decoration: line-through; }
+        .slot-selected { background: #2563eb; color: #fff; border-color: #2563eb; box-shadow: 0 4px 12px rgba(37,99,235,0.3); transform: scale(1.06); }
+        .modal-overlay { background: rgba(0,0,0,0.5); }
+    </style>
 </head>
 <body class="flex h-screen bg-gray-50 overflow-hidden">
     <!-- Sidebar -->
@@ -51,20 +58,14 @@
     <main class="flex-1 flex flex-col overflow-hidden">
         <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
             <h1 class="text-xl font-semibold text-gray-800">Appointments Schedule</h1>
-            <button class="btn-primary flex items-center shadow-md shadow-blue-100 hover:scale-[1.02] active:scale-[0.98] transition-all"><i data-lucide="plus" class="mr-2 w-5 h-5"></i> Book Appointment</button>
+            <button id="open-booking-modal" class="btn-primary flex items-center shadow-md shadow-blue-100 hover:scale-[1.02] active:scale-[0.98] transition-all"><i data-lucide="plus" class="mr-2 w-5 h-5"></i> Book Appointment</button>
         </header>
 
         <div class="flex-1 overflow-y-auto p-8">
             <div class="card overflow-hidden">
                 <div class="p-6 border-b border-gray-50 flex items-center justify-between">
-                    <div class="flex items-center space-x-4">
-                        <button class="btn-secondary px-3 py-1.5 text-sm">Today</button>
-                        <div class="flex items-center space-x-2 text-gray-500 font-semibold">
-                            <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-                            <span>16 March 2024</span>
-                            <button class="p-1 hover:bg-gray-100 rounded"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
-                        </div>
-                    </div>
+                    <h2 class="text-lg font-bold text-gray-800">All Appointments</h2>
+                    <span id="apt-count" class="text-sm text-gray-400"></span>
                 </div>
                 <table class="w-full text-left">
                     <thead class="bg-gray-50 text-gray-400 text-xs uppercase tracking-wider font-semibold">
@@ -72,49 +73,286 @@
                             <th class="px-6 py-4">Time</th>
                             <th class="px-6 py-4">Patient</th>
                             <th class="px-6 py-4">Doctor</th>
+                            <th class="px-6 py-4">Date</th>
                             <th class="px-6 py-4 text-center">Status</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-50 text-sm">
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 font-bold text-blue-600">09:30 AM</td>
-                            <td class="px-6 py-4">
-                                <div class="font-semibold text-gray-800">Rahul Sharma</div>
-                                <div class="text-gray-400 text-xs mt-0.5">Root Canal</div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">Dr. Ankit Sharma</td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase">Confirmed</span>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 transition-colors bg-blue-50/30">
-                            <td class="px-6 py-4 font-bold text-blue-600">11:15 AM</td>
-                            <td class="px-6 py-4">
-                                <div class="font-semibold text-gray-800">Priya Verma</div>
-                                <div class="text-gray-400 text-xs mt-0.5">Cleaning</div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">Dr. Neha Kapoor</td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="px-2 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold uppercase">Ongoing</span>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 font-bold text-blue-600">01:00 PM</td>
-                            <td class="px-6 py-4">
-                                <div class="font-semibold text-gray-800">Amit Gupta</div>
-                                <div class="text-gray-400 text-xs mt-0.5">Consultation</div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">Dr. Rajiv Mehta</td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="px-2 py-1 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase">Scheduled</span>
-                            </td>
-                        </tr>
+                    <tbody id="appointments-tbody" class="divide-y divide-gray-50 text-sm">
                     </tbody>
                 </table>
+                <div id="empty-msg" class="py-16 text-center text-gray-400 hidden">
+                    <p class="font-medium">No appointments yet</p>
+                    <p class="text-sm mt-1">Click "Book Appointment" to add one.</p>
+                </div>
             </div>
         </div>
     </main>
 
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 modal-overlay flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 rounded-t-2xl flex items-center justify-between text-white sticky top-0">
+                <h2 class="text-lg font-bold">Book New Appointment</h2>
+                <button id="close-modal" class="p-1 hover:bg-white/20 rounded-lg"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="booking-form" class="p-6 space-y-4">
+                <div id="booking-error" class="bg-red-50 border border-red-200 rounded-xl p-3 text-red-700 text-sm font-medium hidden"></div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Patient Name *</label>
+                        <input type="text" id="b-patient" placeholder="e.g. Rahul Sharma" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Phone</label>
+                        <input type="tel" id="b-phone" placeholder="+91 XXXXX" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Doctor *</label>
+                    <select id="b-doctor" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                        <option value="">— Select Doctor —</option>
+                        <option>Dr. Ankit Sharma</option>
+                        <option>Dr. Neha Kapoor</option>
+                        <option>Dr. Rajiv Mehta</option>
+                        <option>Dr. Priya Das</option>
+                        <option>Dr. Suresh Patel</option>
+                        <option>Dr. Kavita Joshi</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Date *</label>
+                        <input type="date" id="b-date" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Treatment *</label>
+                        <input type="text" id="b-treatment" list="treat-list" placeholder="e.g. Root Canal" required class="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                        <datalist id="treat-list">
+                            <option value="Root Canal">
+                            <option value="Tooth Cleaning">
+                            <option value="Dental Filling">
+                            <option value="Braces Fitting">
+                            <option value="Extraction">
+                            <option value="General Checkup">
+                            <option value="X-Ray + Checkup">
+                            <option value="Teeth Whitening">
+                        </datalist>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Select Time Slot *</label>
+                    <div id="slot-hint" class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-center text-gray-400 text-sm">
+                        Select a <b>Doctor</b> and <b>Date</b> to see available slots
+                    </div>
+                    <div id="slot-grid" class="grid grid-cols-3 gap-2 hidden"></div>
+                    <input type="hidden" id="b-time" value="">
+                </div>
+
+                <div class="flex space-x-3 pt-2">
+                    <button type="button" id="cancel-booking" class="flex-1 py-2.5 border border-gray-200 rounded-xl text-gray-600 font-semibold text-sm hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="assets/js/scripts.js"></script>
+    <script>
+    (function() {
+        const STORAGE_KEY = 'standalone_appointments';
+        const STATUS_COLORS = {
+            CONFIRMED: 'bg-emerald-100 text-emerald-700',
+            ONGOING: 'bg-blue-100 text-blue-700',
+            SCHEDULED: 'bg-amber-100 text-amber-700',
+            COMPLETED: 'bg-purple-100 text-purple-700',
+            CANCELLED: 'bg-red-100 text-red-700',
+        };
+
+        // Seed data
+        const SEED = [
+            { id: 1, patient: 'Rahul Sharma', phone: '+91 98765 43210', doctor: 'Dr. Ankit Sharma', date: '2024-03-16', time: '09:30 AM', treatment: 'Root Canal', status: 'CONFIRMED' },
+            { id: 2, patient: 'Priya Verma', phone: '+91 87654 32109', doctor: 'Dr. Neha Kapoor', date: '2024-03-16', time: '11:00 AM', treatment: 'Cleaning', status: 'ONGOING' },
+            { id: 3, patient: 'Amit Gupta', phone: '+91 76543 21098', doctor: 'Dr. Rajiv Mehta', date: '2024-03-16', time: '01:00 PM', treatment: 'Consultation', status: 'SCHEDULED' },
+        ];
+
+        // Time slots 09:00 to 18:00 (30-min)
+        const SLOTS = [];
+        for (let h = 9; h < 18; h++) {
+            for(let m = 0; m < 60; m += 30) {
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                const h12 = h % 12 || 12;
+                SLOTS.push(`${String(h12).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ampm}`);
+            }
+        }
+
+        function loadAppointments() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : [...SEED];
+            } catch { return [...SEED]; }
+        }
+
+        function saveAppointments(list) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        }
+
+        function isSlotBooked(appointments, doctor, date, time, excludeId) {
+            return appointments.some(a =>
+                a.doctor === doctor &&
+                a.date === date &&
+                a.time === time &&
+                a.status !== 'CANCELLED' &&
+                (excludeId ? a.id !== excludeId : true)
+            );
+        }
+
+        function formatDate(dateStr) {
+            const d = new Date(dateStr + 'T00:00:00');
+            return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function renderTable() {
+            const appointments = loadAppointments();
+            const tbody = document.getElementById('appointments-tbody');
+            const emptyMsg = document.getElementById('empty-msg');
+            const countEl = document.getElementById('apt-count');
+
+            if (appointments.length === 0) {
+                tbody.innerHTML = '';
+                emptyMsg.classList.remove('hidden');
+                countEl.textContent = '';
+                return;
+            }
+            emptyMsg.classList.add('hidden');
+            countEl.textContent = `${appointments.length} appointment(s)`;
+
+            tbody.innerHTML = appointments.map(a => `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4 font-bold text-blue-600">${a.time}</td>
+                    <td class="px-6 py-4">
+                        <div class="font-semibold text-gray-800">${a.patient}</div>
+                        <div class="text-gray-400 text-xs mt-0.5">${a.treatment}</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">${a.doctor}</td>
+                    <td class="px-6 py-4 text-gray-500 text-xs">${formatDate(a.date)}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="px-2 py-1 rounded-full ${STATUS_COLORS[a.status] || 'bg-gray-100 text-gray-600'} text-[10px] font-bold uppercase">${a.status}</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderSlots() {
+            const doctor = document.getElementById('b-doctor').value;
+            const date = document.getElementById('b-date').value;
+            const slotGrid = document.getElementById('slot-grid');
+            const slotHint = document.getElementById('slot-hint');
+
+            if (!doctor || !date) {
+                slotGrid.classList.add('hidden');
+                slotHint.classList.remove('hidden');
+                return;
+            }
+            slotHint.classList.add('hidden');
+            slotGrid.classList.remove('hidden');
+
+            const appointments = loadAppointments();
+            const selectedTime = document.getElementById('b-time').value;
+
+            slotGrid.innerHTML = SLOTS.map(slot => {
+                const booked = isSlotBooked(appointments, doctor, date, slot);
+                const selected = selectedTime === slot;
+                let cls = 'slot-available';
+                if (booked) cls = 'slot-booked';
+                else if (selected) cls = 'slot-selected';
+
+                return `<button type="button" data-slot="${slot}" class="px-2 py-2.5 rounded-lg text-xs font-bold transition-all ${cls}" ${booked ? 'disabled' : ''} title="${booked ? 'Already booked for ' + doctor : slot}">
+                    ${slot}${booked ? '<span class="block text-[9px] font-normal mt-0.5">Booked</span>' : ''}
+                </button>`;
+            }).join('');
+
+            // Attach click handlers
+            slotGrid.querySelectorAll('button:not([disabled])').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.getElementById('b-time').value = this.dataset.slot;
+                    renderSlots(); // Re-render to update selection
+                });
+            });
+        }
+
+        // Modal handling
+        const modal = document.getElementById('booking-modal');
+        const openBtn = document.getElementById('open-booking-modal');
+        const closeBtn = document.getElementById('close-modal');
+        const cancelBtn = document.getElementById('cancel-booking');
+
+        function openModal() { modal.classList.remove('hidden'); document.getElementById('b-time').value = ''; renderSlots(); }
+        function closeModal() { modal.classList.add('hidden'); document.getElementById('booking-form').reset(); document.getElementById('b-time').value = ''; document.getElementById('booking-error').classList.add('hidden'); }
+
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+        // Re-render slots when doctor or date changes
+        document.getElementById('b-doctor').addEventListener('change', () => { document.getElementById('b-time').value = ''; renderSlots(); });
+        document.getElementById('b-date').addEventListener('change', () => { document.getElementById('b-time').value = ''; renderSlots(); });
+
+        // Form submit
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const errEl = document.getElementById('booking-error');
+            const patient = document.getElementById('b-patient').value.trim();
+            const phone = document.getElementById('b-phone').value.trim();
+            const doctor = document.getElementById('b-doctor').value;
+            const date = document.getElementById('b-date').value;
+            const time = document.getElementById('b-time').value;
+            const treatment = document.getElementById('b-treatment').value.trim();
+
+            if (!patient || !doctor || !date || !time || !treatment) {
+                errEl.textContent = '⚠️ Please fill all required fields and select a time slot.';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            const appointments = loadAppointments();
+
+            // DOUBLE-BOOKING CHECK
+            if (isSlotBooked(appointments, doctor, date, time)) {
+                errEl.textContent = `❌ ${doctor} already has an appointment at ${time} on ${formatDate(date)}. Please choose a different time slot.`;
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            appointments.push({
+                id: Date.now(),
+                patient, phone, doctor, date, time, treatment,
+                status: 'SCHEDULED'
+            });
+            saveAppointments(appointments);
+            renderTable();
+            closeModal();
+
+            // Brief success feedback
+            const header = document.querySelector('header h1');
+            const orig = header.textContent;
+            header.textContent = '✅ Appointment Booked!';
+            header.style.color = '#059669';
+            setTimeout(() => { header.textContent = orig; header.style.color = ''; }, 2000);
+        });
+
+        // Set min date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('b-date').setAttribute('min', today);
+
+        // Initial render
+        renderTable();
+        if(window.lucide) lucide.createIcons();
+    })();
+    </script>
 </body>
 </html>

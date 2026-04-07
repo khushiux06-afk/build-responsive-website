@@ -3,6 +3,7 @@ import { Search, Plus, Clock, User, Edit2, Trash2, Check, X, Save, Calendar as C
 import { useNavigate } from 'react-router-dom';
 import { useData, Appointment, PHOTOS } from '../contexts/DataContext';
 import { useConfirm } from '../components/ConfirmDialog';
+import { AlertCircle } from 'lucide-react';
 
 const TREATMENTS = ['Root Canal', 'Tooth Cleaning', 'Dental Filling', 'Braces Fitting', 'Extraction', 'X-Ray + Checkup', 'Crown Fitting', 'Teeth Whitening', 'General Checkup'];
 
@@ -17,11 +18,12 @@ const STATUS_STYLES: Record<string, string> = {
 export const AppointmentsPage: React.FC = () => {
   const navigate = useNavigate();
   const confirm = useConfirm();
-  const { appointments, updateAppointment, deleteAppointment, doctors } = useData();
+  const { appointments, updateAppointment, deleteAppointment, doctors, isSlotBooked } = useData();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [editAppt, setEditAppt] = useState<Appointment | null>(null);
   const [showEdit, setShowEdit] = useState(false);
+  const [editError, setEditError] = useState('');
 
   // Sort newest-added first
   const sorted = [...appointments].sort((a, b) => b.id.localeCompare(a.id));
@@ -42,11 +44,19 @@ export const AppointmentsPage: React.FC = () => {
     if (ok) deleteAppointment(id);
   };
 
-  const openEdit = (a: Appointment) => { setEditAppt({ ...a }); setShowEdit(true); };
+  const openEdit = (a: Appointment) => { setEditAppt({ ...a }); setEditError(''); setShowEdit(true); };
 
   const saveEdit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (editAppt) updateAppointment(editAppt.id, editAppt);
+    if (editAppt) {
+      // Check for conflict: same doctor, same date, same time (excluding this appointment)
+      if (isSlotBooked(editAppt.doctor, editAppt.rawDate, editAppt.time, editAppt.id)) {
+        setEditError(`❌ ${editAppt.doctor} already has an appointment at ${editAppt.time} on ${editAppt.date}. Change the time or doctor.`);
+        return;
+      }
+      updateAppointment(editAppt.id, editAppt);
+    }
+    setEditError('');
     setShowEdit(false);
   };
 
@@ -157,6 +167,12 @@ export const AppointmentsPage: React.FC = () => {
               <button onClick={() => setShowEdit(false)} className="p-1 hover:bg-white/20 rounded-lg"><X size={20} /></button>
             </div>
             <form onSubmit={saveEdit} className="p-6 space-y-4">
+              {editError && (
+                <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-start space-x-2">
+                  <AlertCircle size={16} className="text-red-500 mt-0.5 shrink-0" />
+                  <p className="text-red-700 text-xs font-medium">{editError}</p>
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Patient Name</label>
